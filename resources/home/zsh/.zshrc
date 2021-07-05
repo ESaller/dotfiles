@@ -18,7 +18,7 @@ export ZPLUG_HOME="$HOME/.zplug"
 case `uname` in
   Darwin)
     # commands for OS X go here
-    export PATH="/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+    export PATH="/usr/local/bin:/usr/local/sbin::$PATH"
   ;;
   Linux)
     # commands for Linux go here
@@ -186,14 +186,15 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 ########################################
 # Extensions
 ########################################
-zplug "zsh-users/zsh-history-substring-search"      # Better History Search
-zplug "zsh-users/zsh-syntax-highlighting", defer:2  # Syntax Highlights
-zplug "zsh-users/zsh-autosuggestions"               # Completions
-zplug "zsh-users/zsh-completions"                   # Completions
+zplug "zsh-users/zsh-history-substring-search"       # Better History Search
+zplug "zsh-users/zsh-syntax-highlighting", defer:2   # Syntax Highlights
+zplug "zsh-users/zsh-autosuggestions"                # Completions
+zplug "zsh-users/zsh-completions"                    # Completions
 zplug "junegunn/fzf", as:command, hook-build:"./install --bin", use:"bin/{fzf-tmux,fzf}"  # fzf fuzzy searching
 #zplug "modules/docker", from:prezto
-zplug "changyuheng/zsh-interactive-cd"              # fish like cd comletion
+zplug "changyuheng/zsh-interactive-cd"               # fish like cd comletion
 zplug "b4b4r07/enhancd", use:init.sh
+zplug "escalate/oh-my-zsh-proxy-plugin", from:github # local proxy configuration
 
 ########################################
 # OS Specific
@@ -607,23 +608,6 @@ fi
 ################################################################################
 # SOURCE
 ################################################################################
-#[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
-#.  ~/miniconda3/etc/profile.d/conda.sh
-#conda activate base
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/esaller/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/esaller/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/esaller/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/esaller/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# Python setup
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
